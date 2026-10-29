@@ -2,6 +2,7 @@ package se.lexicon;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Reservation {
     private String reservationId;
@@ -75,5 +76,7 @@ public class Reservation {
         completedAt = LocalDateTime.now();
         status = ReservationStatus.COMPLETED;
         parkingSpace.release();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm");
+        IO.println("Completed at: " +completedAt.format(formatter));
     }
 }

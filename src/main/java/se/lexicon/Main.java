@@ -1,5 +1,7 @@
 package se.lexicon;
 
+import java.time.format.DateTimeFormatter;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -19,7 +21,7 @@ public class Main {
             IO.println("1.  Show all parking spaces");
             IO.println("2.  Show available parking spaces");
             IO.println("3.  Make a reservation");
-            IO.println("4.  Complete a reservation");
+            IO.println("4.  Check out (Leave parking)");
             IO.println("5.  Show all reservations");
             IO.println("0.  Exit");
 
@@ -46,7 +48,8 @@ public class Main {
                         Reservation reservation = parkingService.makeReservation(name,phone,vehicle,spaceNumber,hours);
                         IO.println("Reservation successful");
                         IO.println("Reservation ID: " +reservation.getReservationId());
-                        IO.println("Expected end time: " +reservation.getExpectedEndTime());
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm");
+                        IO.println("Expected end time: " +reservation.getExpectedEndTime().format(formatter));
 
                     }
                      catch (NumberFormatException e){
@@ -60,11 +63,11 @@ public class Main {
                 case 4 -> {
                     String reservationId = IO.readln("Enter reservation id: ");
                     if(parkingService.completeReservation(reservationId)){
-                        IO.println("Reservation complete");
+                        IO.println("Check out successful");
                         IO.println("Parking space is now available");
                     }
                     else{
-                        IO.println("Reservation not completed");
+                        IO.println("Check out not completed");
                     }
                 }
                 case 5-> parkingService.showReservations();
